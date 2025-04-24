@@ -82,11 +82,20 @@
         imagenes: enlacesImagenes // enlaces a Google Drive
       };
 
-      const response = await fetch('https://script.google.com/macros/s/AKfycby8TiuX9ND1XYyliE4284nmHw1RyzuplK_vcDkGVbhrCmkG6QQvbG0QxgzwIJzmKxrofg/exec', {
+      const formData = new FormData();
+        formData.append('ticketId', ticketId);
+        formData.append('nombre', data.get('nombre'));
+        formData.append('area', data.get('area'));
+        formData.append('categoria', data.get('categoria'));
+        formData.append('descripcion', data.get('descripcion'));
+        // Para las imágenes, si ya las subiste a Drive antes:
+        formData.append('imagenes', JSON.stringify(enlacesImagenes));
+
+        const response = await fetch('https://script.google.com/macros/s/AKfycby8TiuX9ND1XYyliE4284nmHw1RyzuplK_vcDkGVbhrCmkG6QQvbG0QxgzwIJzmKxrofg/exec', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+        body: formData // sin headers manuales
+        });
+
 
       if (response.ok) {
         document.getElementById('confirmacion').textContent = `Ticket enviado. Número: ${ticketId}`;
