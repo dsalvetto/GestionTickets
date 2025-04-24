@@ -1,0 +1,40 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.container {
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.ticket {
+    background: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.ticket.Pendiente { border-left: 4px solid #ff9800; }
+.ticket.Listo { border-left: 4px solid #4caf50; }
+
+select, input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 20px 0;
+    display: block;
+}
+
+button {
+    background: #2196F3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
