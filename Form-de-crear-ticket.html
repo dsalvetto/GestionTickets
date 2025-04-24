@@ -1,1 +1,100 @@
-https://script.google.com/macros/s/AKfycby8TiuX9ND1XYyliE4284nmHw1RyzuplK_vcDkGVbhrCmkG6QQvbG0QxgzwIJzmKxrofg/exec
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Ticket</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea { width: 100%; padding: 8px; margin-top: 5px; }
+    button { margin-top: 15px; padding: 10px 15px; background: #1976d2; color: white; border: none; cursor: pointer; }
+    button:hover { background: #1565c0; }
+    .confirmation { margin-top: 15px; color: green; }
+  </style>
+</head>
+<body>
+  <h1>Formulario de Ticket</h1>
+  <form id="ticketForm">
+    <label>Nombre del solicitante:
+      <input type="text" name="nombre" required>
+    </label>
+
+    <label>Área:
+      <select name="area" id="area" required>
+        <option value="">Selecciona un área</option>
+        <option value="Catálogo">Catálogo</option>
+        <option value="Category">Category</option>
+        <option value="Plataformas">Plataformas</option>
+      </select>
+    </label>
+
+    <label>Categoría del problema:
+      <select name="categoria" id="categoria" required></select>
+    </label>
+
+    <label>Descripción del problema:
+      <textarea name="descripcion" rows="5" required></textarea>
+    </label>
+
+    <label>Adjuntar imágenes:
+      <input type="file" name="imagenes" id="imagenes" accept="image/*" multiple>
+    </label>
+
+    <button type="submit">Enviar Ticket</button>
+    <div class="confirmation" id="confirmacion"></div>
+  </form>
+
+  <script>
+    const categoriasPorArea = {
+      'Catálogo': ['Error en descripción', 'Falta de imagen', 'Precio incorrecto'],
+      'Category': ['Error en navegación', 'Falta categoría', 'Problema con filtros'],
+      'Plataformas': ['Error en la web', 'Problema con la app', 'Integración fallida']
+    };
+
+    document.getElementById('area').addEventListener('change', e => {
+      const categorias = categoriasPorArea[e.target.value] || [];
+      const categoriaSelect = document.getElementById('categoria');
+      categoriaSelect.innerHTML = '';
+      categorias.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        categoriaSelect.appendChild(opt);
+      });
+    });
+
+    document.getElementById('ticketForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+      const ticketId = `TKT-${Date.now()}`;
+
+      const formData = new FormData();
+      formData.append('ticketId', ticketId);
+      formData.append('nombre', data.get('nombre'));
+      formData.append('area', data.get('area'));
+      formData.append('categoria', data.get('categoria'));
+      formData.append('descripcion', data.get('descripcion'));
+      formData.append('imagenes', JSON.stringify([])); // A futuro: subir y poner enlaces reales
+
+      try {
+        const res = await fetch('https://script.google.com/macros/s/AKfycby8TiuX9ND1XYyliE4284nmHw1RyzuplK_vcDkGVbhrCmkG6QQvbG0QxgzwIJzmKxrofg/exec', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (res.ok) {
+          document.getElementById('confirmacion').textContent = `Ticket enviado. Número: ${ticketId}`;
+          form.reset();
+          document.getElementById('categoria').innerHTML = '';
+        } else {
+          document.getElementById('confirmacion').textContent = 'Error al enviar el ticket.';
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById('confirmacion').textContent = 'Error al conectar con el servidor.';
+      }
+    });
+  </script>
+</body>
+</html>
