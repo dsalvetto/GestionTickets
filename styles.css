@@ -1,40 +1,284 @@
-/* styles.css */
+/* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    color: #333;
 }
 
 .container {
-    background: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.ticket {
+    max-width: 800px;
+    margin: 20px auto;
     background: white;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-.ticket.Pendiente { border-left: 4px solid #ff9800; }
-.ticket.Listo { border-left: 4px solid #4caf50; }
+.header {
+    background: #598eff;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #e6e6e6;
+}
 
-select, input, textarea {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0 20px 0;
+.logo {
+    height: 40px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Formulario */
+.form {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
     display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
 }
 
-button {
-    background: #2196F3;
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.btn-submit {
+    background: #3483fa;
     color: white;
-    padding: 10px 20px;
     border: none;
+    padding: 12px 20px;
+    font-size: 16px;
     border-radius: 4px;
     cursor: pointer;
+    width: 100%;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+.btn-submit:hover {
+    background: #2968c8;
+}
+
+/* Mensajes */
+.mensaje {
+    padding: 0 20px 20px;
+}
+
+.success {
+    background: #e6f7ee;
+    color: #00a650;
+    padding: 15px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Validación */
+input:invalid, select:invalid {
+    border-color: #ff9999;
+}
+
+/* Estilos específicos para el panel */
+.panel-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.filtro-select {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.refresh-btn {
+    background: #f0f0f0;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.refresh-btn:hover {
+    background: #e0e0e0;
+}
+
+.tickets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.ticket-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 15px;
+    border-left: 4px solid #ff9800;
+}
+
+.ticket-card.resuelto {
+    border-left-color: #4caf50;
+    opacity: 0.9;
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.ticket-number {
+    font-weight: bold;
+    color: #333;
+}
+
+.ticket-status {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.ticket-status.pendiente {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.ticket-status.listo {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.ticket-desc {
+    color: #666;
+    margin: 10px 0;
+}
+
+.ticket-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+.status-select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    flex-grow: 1;
+}
+
+.ver-detalles-btn {
+    background: #f5f5f5;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.ver-detalles-btn:hover {
+    background: #e0e0e0;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: #333;
+}
+
+.descripcion-completa {
+    white-space: pre-line;
+    margin: 10px 0;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.imagenes-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.thumb-imagen {
+    max-width: 100px;
+    max-height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.thumb-imagen:hover {
+    transform: scale(1.05);
+}
+
+.enlace-imagen {
+    display: inline-block;
 }
